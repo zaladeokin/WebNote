@@ -1,38 +1,125 @@
-.App {
-  text-align: center;
+:root {
+    --res-img-width: 100vw;
+    --header-height: 5vh;
+
+
+    --color1: #ffffff;
+    --color2: #aa421f;
+    --bg-color1: #d0c6bc;
+    --bg-color2: #add8e6;
+    --color-variation1: #877a6f;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@media all and (max-height:100vmin) {
+    :root {
+        --res-img-width: 100vmin;
+        --header-height: 5vmin;
+    }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.error {
+    margin: 0 auto;
+    padding: 1vmin;
+    overflow-wrap: break-word;
+    height: fit-content;
+    width: fit-content;
+    color: #ff0000;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: 500;
+    text-align: justify;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/*              Header      */
+header {
+    position: fixed;
+    z-index: 100;
+    margin: 0;
+    height: var(--header-height);
 }
 
-.App-link {
-  color: #61dafb;
+header h1 {
+    margin: unset;
+    padding: 1vmin;
+    background-color: #000000;
+    color: var(--color1);
+    font-size: 100%;
+    line-height: var(--header-height);
+    font-style: oblique;
+    font-family: Cambria;
+    font-weight: 1000;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+header span {
+    color: var(--color2);
+}
+
+/*              Homepage   */
+.homepage {
+    background: var(--bg-color1);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.homepage .container {
+    position: inherit;
+    width: 100%;
+    height: 100%;
+    background-image: url('./img/WebNote.jpg');
+    background-repeat: no-repeat;
+    background-size: var(--res-img-width) auto;
+    background-position: center center;
+}
+
+.homepage section {
+    display: block;
+    margin: 50vh auto;
+    padding-left: 5vmin;
+    width: calc((var(--res-img-width)/4)*3);
+    height: fit-content;
+    background: unset;
+    font-style: italic;
+    font-size: 0.7em;
+}
+
+.about {
+    font-weight: 500;
+    text-align: justify;
+    color: var(--color2);
+}
+
+.homepage button,
+.homepage input {
+    display: block;
+    margin: 2vmin auto;
+    padding: 2%;
+    width: calc(var(--res-img-width)/2);
+    height: fit-content;
+    border: solid var(--color-variation1) 1%;
+    border-radius: 5vmin;
+    background-color: var(--color1);
+}
+
+.homepage input:focus {
+    border: solid var(--color-variation1) 1%;
+}
+
+.homepage button:hover {
+    background-color: var(--color2);
+}
+
+/*              Catalog      */
+
+.catalog {
+    position: absolute;
+    left: 0;
+    top: calc(var(--header-height) + (1vmin * 2));
+    height: calc(100vh - var(--header-height) - (1vmin * 2));
+    width: 100vw;
+    background-color: var(--bg-color2);
 }
