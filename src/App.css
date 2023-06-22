@@ -1,6 +1,7 @@
 :root {
     --res-img-width: 100vw;
-    --header-height: 5vh;
+    --header-height: 10vh;
+    --footer-height: 10vh;
 
 
     --color1: #ffffff;
@@ -13,7 +14,8 @@
 @media all and (max-height:100vmin) {
     :root {
         --res-img-width: 100vmin;
-        --header-height: 5vmin;
+        --header-height: 10vmin;
+        --footer-height: 10vmin;
     }
 }
 
@@ -49,12 +51,11 @@ header {
 header h1 {
     display: table-cell;
     margin: 0;
-    padding: 0;
-    padding-left: 1vmin;
+    padding: 0 1vmin;
     width: fit-content;
     background-color: #000000;
     color: var(--color1);
-    font-size: calc(var(--header-height)*0.8);
+    font-size: 1em;
     font-style: oblique;
     font-family: Cambria;
     font-weight: 1000;
@@ -196,7 +197,7 @@ header input[type='text']:focus {
     position: absolute;
     left: 0;
     top: var(--header-height);
-    height: calc(100vh - var(--header-height));
+    height: calc(100vh - var(--header-height) - var(--footer-height));
     width: 100vw;
     background-color: var(--bg-color2);
 }
