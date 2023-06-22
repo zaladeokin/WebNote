@@ -32,27 +32,104 @@
 
 /*              Header      */
 header {
+    display: table;
     position: fixed;
     z-index: 100;
     margin: 0;
+    padding: 0;
     height: var(--header-height);
+    width: fit-content;
+}
+
+.setWidget {
+    width: 100vw;
+    background-color: #ffffff;
 }
 
 header h1 {
-    margin: unset;
-    padding: 1vmin;
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+    padding-left: 1vmin;
+    width: fit-content;
     background-color: #000000;
     color: var(--color1);
-    font-size: 100%;
-    line-height: var(--header-height);
+    font-size: calc(var(--header-height)*0.8);
     font-style: oblique;
     font-family: Cambria;
     font-weight: 1000;
+    vertical-align: middle;
 }
 
 header span {
     color: var(--color2);
 }
+
+header .imageWidget {
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+    width: fit-content;
+    height: inherit;
+    vertical-align: middle;
+}
+
+header img {
+    display: block;
+    margin: 0 auto;
+    padding: 0.5% 0;
+    height: 99%;
+    border-radius: 1em;
+}
+
+header .searchIcon {
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 50%;
+    vertical-align: middle;
+}
+
+header .searchBar {
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+    width: fit-content;
+    height: 80%;
+    vertical-align: middle;
+}
+
+header i {
+    margin: 0;
+    padding-left: 0;
+    float: right;
+    width: fit-content;
+    font-size: 50%;
+}
+
+header input[type='text'] {
+    margin: 0;
+    padding: 1%;
+    padding-left: 0;
+    max-height: 90%;
+    width: fit-content;
+    max-width: 40vw;
+    font-size: 0.9em;
+    font-weight: 100;
+    border: 0;
+}
+
+header input[type='text']::placeholder {
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1em;
+}
+
+header input[type='text']:focus {
+    outline: none;
+}
+
 
 /*              Homepage   */
 .homepage {
@@ -118,8 +195,8 @@ header span {
 .catalog {
     position: absolute;
     left: 0;
-    top: calc(var(--header-height) + (1vmin * 2));
-    height: calc(100vh - var(--header-height) - (1vmin * 2));
+    top: var(--header-height);
+    height: calc(100vh - var(--header-height));
     width: 100vw;
     background-color: var(--bg-color2);
 }
