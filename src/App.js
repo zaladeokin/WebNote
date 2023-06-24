@@ -3,6 +3,7 @@ import { NoteState } from './NoteContext';
 import { Header } from './Component/Header';
 import { HomePage } from './Component/Homepage';
 import { Login } from './Component/Login';
+import { Footer } from './Component/Footer';
 import './app.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           </HomePage>
         ) : <Catalog />}
       </main>
+      {login && <Footer />}
     </NoteState>
   );
 }
