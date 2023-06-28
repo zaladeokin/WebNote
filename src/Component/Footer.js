@@ -1,16 +1,13 @@
+import { useSelectedNoteContext } from "../NoteContext";
+
 export function Footer() {
+    const selectedNote = useSelectedNoteContext().id;
     return (
         <footer>
-            {/** pin note */}
-            {/** Delete */}
-
-            {/** Category */}
-            {/** Trash */}
-            {/** Add note */}
             <div className='iconContainer'>
-                <div className='icon'><i className='fa fa-search'></i></div>
-                <div className='icon'><i className='fa fa-search'></i></div>
-                <div className='icon addNote'><div className='addNoteLabel'><i className='fa fa-search'>&nbsp;&nbsp;</i>Add note</div></div>
+                <div className='icon'>{selectedNote !== null ? (<i className='fa fa-map-pin'></i>) : (<i className='fa fa-layer-group'></i>)}</div>
+                <div className='icon'><i className='fa fa-trash-can'></i></div>
+                <div className='icon addNote'>{selectedNote !== null ? (<div className='addNoteLabel'><i className='fas fa-edit'>&nbsp;&nbsp;</i>Edit</div>) : (<div className='addNoteLabel'><i className='fa-solid fa-plus'>&nbsp;&nbsp;</i>Add note</div>)}</div>
             </div>
         </footer>
     );

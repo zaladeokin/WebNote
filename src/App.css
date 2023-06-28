@@ -4,6 +4,14 @@
     --footer-height: 5vh;
     --footer-width: 60vw;
 
+    --card-height: 25vmax;
+    --card-width-250px: 96vw;
+    --card-width-500px: 48vw;
+    --card-width-750px: 32vw;
+    --card-width-1000px: 24vw;
+    --row-gap: 1vh;
+    --card-pd-top: 1vh;
+    --card-pd-bottom: 2.5vh;
 
     --color1: #ffffff;
     --color2: #aa421f;
@@ -195,19 +203,169 @@ header input[type='text']:focus {
 /*              Catalog      */
 
 .catalog {
+    box-sizing: border-box;
     position: absolute;
     left: 0;
     top: var(--header-height);
+    display: grid;
+    grid-template-columns: var(--card-width-250px);
+    row-gap: var(--row-gap);
+    justify-content: space-evenly;
+    align-content: start;
+    margin: 0;
+    padding: 0;
+    padding-top: var(--card-pd-top);
+    padding-bottom: var(--card-pd-bottom);
+    overflow: auto;
+    -ms-overflow-style: none;
+    /*IE & Edge*/
+    scrollbar-width: none;
+    /*Firefox*/
     height: calc(100vh - var(--header-height) - var(--footer-height));
     width: 100vw;
     background-color: var(--bg-color2);
 }
 
+
+.catalog::-webkit-scrollbar,
+.note::-webkit-scrollbar {
+    /* Chrome, Safari and Opera*/
+    display: none;
+}
+
+.card {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    justify-content: space-between;
+    height: var(--card-height);
+    padding: 5%;
+    background-color: #aa421f;
+    border-radius: 1em;
+}
+
+.card h2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    padding: 0;
+    font-weight: 700;
+    font-size: 1.5em;
+    font-style: normal;
+}
+
+.card p {
+    margin: 0%;
+    margin-top: 2.5%;
+    padding: 0;
+    white-space: pre-line;
+    overflow: hidden;
+    height: 50%;
+    font-weight: 400;
+    font-size: 1em;
+}
+
+.card strong,
+.note strong {
+    margin: 0%;
+    padding: 2vmin;
+    background-color: #000000;
+    color: var(--color1);
+    width: fit-content;
+    border-radius: 1em;
+    font-weight: 500;
+    font-size: 0.7em;
+    font-style: oblique;
+}
+
+.card strong.uncategorized,
+.note strong.uncategorized {
+    color: unset;
+    background-color: unset;
+}
+
+@media all and (min-width:500px) {
+    .catalog {
+        grid-template-columns: var(--card-width-500px) var(--card-width-500px);
+    }
+}
+
+@media all and (min-width:750px) {
+    .catalog {
+        grid-template-columns: var(--card-width-750px) var(--card-width-750px) var(--card-width-750px);
+    }
+}
+
+@media all and (min-width:1000px) {
+    .catalog {
+        grid-template-columns: var(--card-width-1000px) var(--card-width-1000px) var(--card-width-1000px) var(--card-width-1000px);
+    }
+}
+
+
+/*              Writing      */
+.note {
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: var(--header-height);
+    margin: 0;
+    padding: 0 1vw;
+    padding-top: var(--card-pd-top);
+    padding-bottom: var(--card-pd-bottom);
+    overflow: auto;
+    -ms-overflow-style: none;
+    /*IE & Edge*/
+    scrollbar-width: none;
+    /*Firefox*/
+    height: calc(100vh - var(--header-height) - var(--footer-height));
+    width: 100vw;
+    background-color: grey;
+}
+
+.note .title {
+    border-bottom: unset;
+    margin: 0;
+    margin-bottom: 2vh;
+    padding: 0;
+    font-weight: 700;
+    font-size: 1.5em;
+    font-style: normal;
+}
+
+.note button {
+    background-color: unset;
+    margin: 0;
+    padding: 0;
+    padding-right: 1vw;
+    border: unset;
+}
+
+
+.note i {
+    font-weight: 700;
+    font-size: 1.5em;
+    font-style: normal;
+}
+
+.note .content {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 1%;
+    margin-bottom: 5%;
+    min-height: 5vh;
+    white-space: pre-wrap;
+}
+
+
 /*              Footer      */
 footer {
     position: fixed;
     left: 0;
-    top: calc(100vh - var(--header-height));
+    top: calc(100vh - var(--footer-height));
     margin: 0;
     padding: 0;
     background-color: #000000;
