@@ -8,7 +8,7 @@ export function useFocusMain() {
         let node = ref.current
 
         function autoFocus() {
-            node.setAttribute('tabindex', '0')
+            node.setAttribute('tabindex', '0');
             node.focus();
         }
 
