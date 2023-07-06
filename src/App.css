@@ -118,7 +118,7 @@ header i {
     font-size: 50%;
 }
 
-header input[type='text'] {
+input[type='search'] {
     margin: 0;
     padding: 1%;
     max-height: 90%;
@@ -129,13 +129,13 @@ header input[type='text'] {
     border: 0;
 }
 
-header input[type='text']::placeholder {
+input[type='search']::placeholder {
     font-style: italic;
     font-weight: 300;
     font-size: 1em;
 }
 
-header input[type='text']:focus {
+input[type='search']:focus {
     outline: none;
     border-bottom: 1px solid black;
 }
@@ -242,7 +242,6 @@ header input[type='text']:focus {
     justify-content: space-between;
     height: var(--card-height);
     padding: 5%;
-    background-color: #aa421f;
     border-radius: 1em;
 }
 
@@ -257,7 +256,8 @@ header input[type='text']:focus {
     font-style: normal;
 }
 
-.catalog h2 {
+.catalog h2,
+.toggle h4 {
     margin: 0;
     padding: 1%;
     font-weight: 500;
@@ -345,7 +345,6 @@ header input[type='text']:focus {
     /*Firefox*/
     height: calc(100vh - var(--header-height) - var(--footer-height));
     width: 100vw;
-    background-color: grey;
 }
 
 .note .title {
@@ -461,6 +460,125 @@ footer .addNote {
 .addNote .addNoteLabel {
     width: fit-content;
     margin: 0 auto;
+}
+
+.toggle {
+    box-sizing: border-box;
+    position: fixed;
+    bottom: var(--footer-height);
+    z-index: 100;
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: var(--row-gap);
+    column-gap: 1vmin;
+    justify-content: space-evenly;
+    align-content: start;
+    margin: 0;
+    padding: 1vh 1vw;
+    height: calc(100vh - var(--header-height) - var(--footer-height));
+    min-width: 25vmin;
+    max-width: 50vmin;
+    background-color: #ffffff;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    /*IE & Edge*/
+    scrollbar-width: none;
+    /*Firefox*/
+}
+
+.toggle::-webkit-scrollbar {
+    /* Chrome, Safari and Opera*/
+    display: none;
+}
+
+.toggle:focus {
+    outline: invert;
+    outline-style: dotted;
+    outline-width: 5px;
+    outline-color: #000000;
+}
+
+.toggle h4 {
+    grid-column: 1 / span 2;
+    padding: 0 1vw;
+    border-bottom: 2px solid #000000;
+}
+
+.toggle .searchBar {
+    grid-column: 1 / span 2;
+    width: 100%;
+}
+
+.toggle input[type='search'] {
+    padding-left: 5%;
+    width: 100%;
+}
+
+.toggle .add,
+.toggle .search {
+    margin: 0;
+    padding: 1vmin 0;
+    border-radius: 1em;
+    text-align: center;
+    background-color: #000000;
+    color: var(--color1);
+}
+
+.toggle .add:hover,
+.toggle .search:hover,
+.toggle .toggle-item:hover {
+    background-color: #aa421f;
+    color: var(--color1);
+}
+
+.toggle .add:active,
+.toggle .search:active,
+.toggle .toggle-item:active {
+    background-color: var(--color-variation1);
+}
+
+.toggle i {
+    margin: 0;
+    padding: 0;
+    width: fit-content;
+    font-size: 100%;
+}
+
+.toggle .fa {
+    display: inline;
+    font-weight: 501;
+    font-size: 50%;
+    line-height: 50%;
+}
+
+.toggle .toggle-item,
+.theme {
+    box-sizing: border-box;
+    grid-column: 1 / span 2;
+    margin: 0%;
+    padding: 1vmin;
+    border-bottom: 1px solid var(--bg-color2);
+    color: #000000;
+    width: 100%;
+    font-weight: 500;
+    font-size: 1em;
+    font-style: normal;
+    text-align: left;
+}
+
+.theme {
+    min-height: 5vh;
+    border: 0;
+    color: #000000;
+}
+
+.theme:hover {
+    border: 2px solid #000000;
+}
+
+.selected {
+    border: 2px inset #000000;
+    border-radius: 1em;
 }
 
 @media all and (min-width:450px) {

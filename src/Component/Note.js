@@ -1,31 +1,54 @@
-import { useEffect, useRef } from "react";
-import { useNotesContext, useSelectedNoteContext, useWritingModeContext } from "../NoteContext";
+import { useEffect, useRef, useState } from "react";
+import { useCategoryContext, useNotesContext, useSelectedNoteContext, useThemeContext, useWritingModeContext } from "../NoteContext";
 import { useFocusMain } from "../hooks/useFocusMain";
 
 export function Note() {
     const ref = useFocusMain();
     const selectedNote = useSelectedNoteContext();
     const allNote = useNotesContext().get;
+    const theme = useThemeContext();
     const writingMode = useWritingModeContext();
+    const [themeId, setThemeId] = useState(null);
 
     const note = allNote.filter((note) => note.id === selectedNote.id)[0];
     const isNew = note === undefined ? true : false;
+    let initVal = isNew ? selectedNote.modify.theme : note.theme;
+
+    useEffect(() => {
+        if (themeId === null) {
+            setThemeId(initVal);
+            selectedNote.modify.theme = initVal;
+        }
+        else if (themeId !== selectedNote.modify.theme) {
+            setThemeId(selectedNote.modify.theme);
+            console.log('update')
+        }
+        console.log('effecg');
+        console.log('selected Theme  :' + selectedNote.modify.theme)
+    }, [selectedNote, themeId, initVal])
+
 
     return (
-        <section className="note" ref={ref}>
+        <section className="note" style={{ backgroundColor: theme[themeId] }} ref={ref}>
             {writingMode.value ? (<Edit isNew={isNew} note={note} changes={selectedNote} />) : (<View note={note} selectedNote={selectedNote} />)}
         </section>
     );
 }
 
 function View({ note, selectedNote }) {
+    const category = useCategoryContext().get;
+
+    function handleBack() {
+        selectedNote.setId(null);
+        selectedNote.modify.theme = 0;
+    }
     return (
         <>
-            <h1 className="title"><button onClick={() => selectedNote.setId(null)}><i className="fa fa-arrow-left"></i></button>{note.title}</h1>
+            <h1 className="title"><button onClick={handleBack}><i className="fa fa-arrow-left"></i></button>{note.title}</h1>
             <div className="content">
                 {note.content}
             </div>
-            <strong className={(note.category !== "") ? '' : 'uncategorized'}>{note.category}</strong>
+            <strong className={(note.category !== 0) ? '' : 'uncategorized'}>{category[note.category]}</strong>
         </>
     );
 }
@@ -49,7 +72,7 @@ function Edit({ isNew, note, changes }) {
         function handleChanges() {
             changes.modify.title = titleNode.innerText;
             changes.modify.content = contentNode.innerText;
-            changes.modify.category = 'testing';
+            changes.modify.category = 0;
         }
 
         window.addEventListener('click', handleChanges);

@@ -1,18 +1,20 @@
-import { useNotesContext, useSelectedNoteContext } from "../NoteContext";
+import { useCategoryContext, useNotesContext, useSelectedNoteContext, useThemeContext } from "../NoteContext";
 import { useFocusMain } from "../hooks/useFocusMain";
 
 export function Catalog() {
     const ref = useFocusMain();
     const notes = useNotesContext().get;
+    const theme = useThemeContext();
+    const category = useCategoryContext().get;
     const selectNoteId = useSelectedNoteContext().setId;
 
     function createCards(obj) {
         let cards = obj.map((note) => {
             return (
-                <article className='card' key={note.id} onClick={() => selectNoteId(note.id)}>
+                <article className='card' key={note.id} onClick={() => selectNoteId(note.id)} style={{ backgroundColor: theme[note.theme] }}>
                     <h3>{note.title}</h3>
                     <p>{note.content}</p>
-                    <strong className={(note.category !== "") ? '' : 'uncategorized'}>{note.category}</strong>
+                    <strong className={(note.category !== 0) ? '' : 'uncategorized'}>{category[note.category]}</strong>
                 </article>
             )
         });

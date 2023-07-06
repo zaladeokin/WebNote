@@ -29,7 +29,7 @@ function Widget({ email }) {
 
     let selected = selectedNote !== null;
     let icon = selected ? '' : (<i className="fa fa-search"></i>);
-    let inputBox = selected ? '' : (<input type='text' placeholder='search notes...' onClick={(event) => event.stopPropagation()} />);
+    let inputBox = selected ? '' : (<input type='search' placeholder='search notes...' onClick={(event) => event.stopPropagation()} />);
     return (
         <>
             <div className='searchIcon'>{icon}</div>
