@@ -118,7 +118,7 @@ function categoryReducer(category, action) {
 export function NoteState({ children }) {
     const [email, emailDispatch] = useReducer(emailReducer, '@.');
     const [allNotes, noteDispatch] = useReducer(noteReducer, initNotes);
-    const trackChanges = useRef({ title: '', content: '', category: '', pinned: false, theme: 0 });
+    const trackChanges = useRef({ title: '', content: '', category: 0, pinned: false, theme: 0 });
     const [category, categoryDispatch] = useReducer(categoryReducer, initCategory);
     const [id, setId] = useState(null);
     const [writingMode, setWritingMode] = useState(false);

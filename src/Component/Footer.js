@@ -14,7 +14,7 @@ export function Footer() {
 
     function handleAddEdit() {
         writingMode.setMode(true);
-        if (noteId === null) selectedNote.setId(note.length + 1)
+        if (noteId === null) selectedNote.setId(note.length + 1);
     }
 
     function handleSave() {
@@ -46,8 +46,13 @@ export function Footer() {
     }
 
     function handleCancel() {
-        if (noteId <= note.length) selectedNote.setId(noteId);
-        else selectedNote.setId(null);
+        if (noteId <= note.length) {
+            selectedNote.setId(noteId);
+            selectedNote.modify.theme = note[noteId - 1].theme;
+        } else {
+            selectedNote.setId(null);
+            selectedNote.modify.theme = 0;
+        }
         writingMode.setMode(false);
     }
 
@@ -129,17 +134,11 @@ function ToggleMenu({ type, onBlur }) {
         return () => toggleNode.removeEventListener('blur', onBlur);
     }, [onBlur]);
 
-    function handleSetTheme(ind) {
-        // let modify= {...selectedNote.modify, theme}
-        // modify.theme= ind;
-        selectedNote.modify.theme = ind;
-        console.log(selectedNote)
-    }
 
     let toggleItem;
 
     if (!category) {
-        toggleItem = themeList.map((color, ind) => (<div className={ind === note.theme ? "theme selected" : "theme"} key={color} style={{ backgroundColor: color }} onClick={() => handleSetTheme(ind)}>{ind === 0 && 'None'}</div>));
+        toggleItem = themeList.map((color, ind) => (<div className={ind === note.theme ? "theme selected" : "theme"} key={color} style={{ backgroundColor: color }} onClick={() => selectedNote.modify.theme = ind}>{ind === 0 && 'None'}</div>));
     } else {
         toggleItem = categoryList.map((cat) => (<div className="toggle-item" key={cat}>{cat}</div>));
     }

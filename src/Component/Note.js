@@ -8,24 +8,29 @@ export function Note() {
     const allNote = useNotesContext().get;
     const theme = useThemeContext();
     const writingMode = useWritingModeContext();
-    const [themeId, setThemeId] = useState(null);
-
     const note = allNote.filter((note) => note.id === selectedNote.id)[0];
     const isNew = note === undefined ? true : false;
+    const [themeId, setThemeId] = useState(null);
     let initVal = isNew ? selectedNote.modify.theme : note.theme;
 
     useEffect(() => {
+        let id = null;
+
         if (themeId === null) {
-            setThemeId(initVal);
             selectedNote.modify.theme = initVal;
+            setThemeId(initVal);
+        } else if (!writingMode.value) {
+            setThemeId(initVal);
+        } else {
+            id = setInterval(() => {
+                if (themeId !== selectedNote.modify.theme) setThemeId(selectedNote.modify.theme);
+            }, 50);
         }
-        else if (themeId !== selectedNote.modify.theme) {
-            setThemeId(selectedNote.modify.theme);
-            console.log('update')
+
+        return () => {
+            if (id !== null) clearInterval(id);
         }
-        console.log('effecg');
-        console.log('selected Theme  :' + selectedNote.modify.theme)
-    }, [selectedNote, themeId, initVal])
+    }, [themeId, selectedNote.modify, initVal, writingMode.value]);
 
 
     return (
