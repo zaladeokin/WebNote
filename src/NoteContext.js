@@ -94,7 +94,7 @@ function noteReducer(notes, action) {
                 }
             });
         } case 'delete': {
-            return '';
+            return notes.filter((note) => note.id !== action.id);
         } default: {
             if (process.env.NODE_ENV === 'development') console.log('Invalid note action.type');
             return notes;

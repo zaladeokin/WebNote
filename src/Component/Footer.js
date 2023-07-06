@@ -17,6 +17,14 @@ export function Footer() {
         if (noteId === null) selectedNote.setId(note.length + 1);
     }
 
+    function handleDelete() {
+        allNotes.dispatch({
+            type: 'delete',
+            id: noteId
+        });
+        selectedNote.setId(null);
+    }
+
     function handleSave() {
         let newValue, isNew;
 
@@ -27,7 +35,7 @@ export function Footer() {
 
         if (noteId <= note.length) {
             isNew = false;
-            newValue = { ...selectedNote.modify, id: noteId };
+            newValue = { ...selectedNote.modify, id: noteId, pinned: note[noteId - 1].pinned }
         }
         else {
             isNew = true;
@@ -92,7 +100,7 @@ export function Footer() {
             return (
                 <>
                     {noteId !== null ? (<div className='icon' onClick={handlePin}><i className='fa fa-map-pin'></i></div>) : (<div className='icon' onClick={() => toggleBar('category')}><i className='fa fa-layer-group'></i></div>)}
-                    <div className='icon'><i className='fa fa-trash-can'></i></div>
+                    {noteId !== null && (<div className='icon' onClick={handleDelete}><i className='fa fa-trash-can'></i></div>)}
                     <div className='icon addNote' onClick={handleAddEdit}>{noteId !== null ? (<div className='addNoteLabel'><i className='fas fa-edit'>&nbsp;&nbsp;</i>Edit</div>) : (<div className='addNoteLabel'><i className='fa-solid fa-plus'>&nbsp;&nbsp;</i>Add note</div>)}</div>
                 </>
             );
