@@ -49,9 +49,11 @@ export function Footer() {
         if (noteId <= note.length) {
             selectedNote.setId(noteId);
             selectedNote.modify.theme = note[noteId - 1].theme;
+            selectedNote.modify.category = note[noteId - 1].category;
         } else {
             selectedNote.setId(null);
             selectedNote.modify.theme = 0;
+            selectedNote.modify.category = 0;
         }
         writingMode.setMode(false);
     }
@@ -140,7 +142,7 @@ function ToggleMenu({ type, onBlur }) {
     if (!category) {
         toggleItem = themeList.map((color, ind) => (<div className={ind === note.theme ? "theme selected" : "theme"} key={color} style={{ backgroundColor: color }} onClick={() => selectedNote.modify.theme = ind}>{ind === 0 && 'None'}</div>));
     } else {
-        toggleItem = categoryList.map((cat) => (<div className="toggle-item" key={cat}>{cat}</div>));
+        toggleItem = categoryList.map((cat, ind) => (<div className={ind === note.category ? "toggle-item selected" : "toggle-item"} key={cat} onClick={() => selectedNote.modify.category = ind}>{ind === 0 ? 'Uncategorized' : cat}</div>));
     }
 
     return (
