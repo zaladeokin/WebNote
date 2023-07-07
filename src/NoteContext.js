@@ -60,6 +60,7 @@ const ThemeContext = createContext(theme);
 const CategoryContext = createContext(null);
 const SelectedNoteContext = createContext(null);
 const WritingModeContext = createContext(null);
+const SearchContext = createContext(null);
 
 function emailReducer(email, action) {
     switch (action.type) {
@@ -122,9 +123,7 @@ export function NoteState({ children }) {
     const [category, categoryDispatch] = useReducer(categoryReducer, initCategory);
     const [id, setId] = useState(null);
     const [writingMode, setWritingMode] = useState(false);
-
-    console.log('Note changed');
-    console.log(trackChanges.current);
+    const [searchKey, setSearchKey] = useState('');
 
     return (
         <EmailContext.Provider value={{ value: email, dispatch: emailDispatch }}>
@@ -132,7 +131,9 @@ export function NoteState({ children }) {
                 <CategoryContext.Provider value={{ get: category, dispatch: categoryDispatch }}>
                     <SelectedNoteContext.Provider value={{ id: id, setId: setId, modify: trackChanges.current }}>
                         <WritingModeContext.Provider value={{ value: writingMode, setMode: setWritingMode }}>
-                            {children}
+                            <SearchContext.Provider value={{ keyword: searchKey, setKeyword: setSearchKey }}>
+                                {children}
+                            </SearchContext.Provider>
                         </WritingModeContext.Provider>
                     </SelectedNoteContext.Provider>
                 </CategoryContext.Provider>
@@ -163,4 +164,8 @@ export function useSelectedNoteContext() {
 
 export function useWritingModeContext() {
     return useContext(WritingModeContext);
+}
+
+export function useSearchContext() {
+    return useContext(SearchContext);
 }

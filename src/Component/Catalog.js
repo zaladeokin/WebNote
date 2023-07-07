@@ -1,4 +1,4 @@
-import { useCategoryContext, useNotesContext, useSelectedNoteContext, useThemeContext } from "../NoteContext";
+import { useCategoryContext, useNotesContext, useSearchContext, useSelectedNoteContext, useThemeContext } from "../NoteContext";
 import { useFocusMain } from "../hooks/useFocusMain";
 
 export function Catalog() {
@@ -7,6 +7,7 @@ export function Catalog() {
     const theme = useThemeContext();
     const category = useCategoryContext().get;
     const selectNoteId = useSelectedNoteContext().setId;
+    const searchKey = useSearchContext().keyword;
 
     function createCards(obj) {
         let cards = obj.map((note) => {
@@ -22,8 +23,14 @@ export function Catalog() {
         return cards;
     }
 
-    let pinnedCardId = notes.filter((note) => note.pinned);
-    let otherCardId = notes.filter((note) => !note.pinned);
+    let Filterednotes;
+    if (searchKey !== '') {
+        let reg = new RegExp(searchKey, "gi");
+        Filterednotes = notes.filter((note) => note.title.search(reg) !== -1);
+    } else Filterednotes = notes;
+
+    let pinnedCardId = Filterednotes.filter((note) => note.pinned);
+    let otherCardId = Filterednotes.filter((note) => !note.pinned);
 
     let pinnedCard = createCards(pinnedCardId);
     let otherCard = createCards(otherCardId);

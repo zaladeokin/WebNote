@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useColorAnimation } from '../hooks/useColorAnimation';
-import { useEmailContext, useSelectedNoteContext } from '../NoteContext';
+import { useEmailContext, useSearchContext, useSelectedNoteContext } from '../NoteContext';
 
 export function Header() {
     const brandColor = ['#aa421f', '#ffffff'];
@@ -25,11 +25,17 @@ export function Header() {
 
 function Widget({ email }) {
     const selectedNote = useSelectedNoteContext().id;
+    const setSearchKeyword = useSearchContext().setKeyword;
+    const ref = useRef('');
     const profilePic = "http://localhost/MyPortfolio/images/myPhoto.jpg";
+
+    function handleSearch() {
+        setSearchKeyword(ref.current.value);
+    }
 
     let selected = selectedNote !== null;
     let icon = selected ? '' : (<i className="fa fa-search"></i>);
-    let inputBox = selected ? '' : (<input type='search' placeholder='search notes...' onClick={(event) => event.stopPropagation()} />);
+    let inputBox = selected ? '' : (<input type='search' placeholder='search notes...' onClick={(event) => event.stopPropagation()} onChange={handleSearch} ref={ref} />);
     return (
         <>
             <div className='searchIcon'>{icon}</div>
