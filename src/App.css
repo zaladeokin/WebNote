@@ -293,8 +293,7 @@ input[type='search']:focus {
 
 .card strong.uncategorized,
 .note strong.uncategorized {
-    color: unset;
-    background-color: unset;
+    display: none;
 }
 
 @media all and (min-width:500px) {

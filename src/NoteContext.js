@@ -52,7 +52,7 @@ const initNotes = [
 ];
 
 const theme = ['#ffffff', '#aa421f', '#808080'];
-const initCategory = ['', 'confidenfial', 'study', 'budget', 'testing']
+const initCategory = ['Uncategorized', 'confidenfial', 'study', 'budget', 'testing']
 
 const EmailContext = createContext(null);
 const NotesContext = createContext(null);
@@ -60,7 +60,7 @@ const ThemeContext = createContext(theme);
 const CategoryContext = createContext(null);
 const SelectedNoteContext = createContext(null);
 const WritingModeContext = createContext(null);
-const SearchContext = createContext(null);
+const FilterContext = createContext(null);
 
 function emailReducer(email, action) {
     switch (action.type) {
@@ -124,6 +124,7 @@ export function NoteState({ children }) {
     const [id, setId] = useState(null);
     const [writingMode, setWritingMode] = useState(false);
     const [searchKey, setSearchKey] = useState('');
+    const [filterByCat, setFilterByCat] = useState(null);
 
     return (
         <EmailContext.Provider value={{ value: email, dispatch: emailDispatch }}>
@@ -131,9 +132,9 @@ export function NoteState({ children }) {
                 <CategoryContext.Provider value={{ get: category, dispatch: categoryDispatch }}>
                     <SelectedNoteContext.Provider value={{ id: id, setId: setId, modify: trackChanges.current }}>
                         <WritingModeContext.Provider value={{ value: writingMode, setMode: setWritingMode }}>
-                            <SearchContext.Provider value={{ keyword: searchKey, setKeyword: setSearchKey }}>
+                            <FilterContext.Provider value={{ search: { keyword: searchKey, setKeyword: setSearchKey }, catFilter: { category: filterByCat, setCategory: setFilterByCat } }}>
                                 {children}
-                            </SearchContext.Provider>
+                            </FilterContext.Provider>
                         </WritingModeContext.Provider>
                     </SelectedNoteContext.Provider>
                 </CategoryContext.Provider>
@@ -166,6 +167,6 @@ export function useWritingModeContext() {
     return useContext(WritingModeContext);
 }
 
-export function useSearchContext() {
-    return useContext(SearchContext);
+export function useFilterContext() {
+    return useContext(FilterContext);
 }

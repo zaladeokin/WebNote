@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useCategoryContext, useNotesContext, useSelectedNoteContext, useThemeContext, useWritingModeContext } from "../NoteContext";
+import { useCategoryContext, useFilterContext, useNotesContext, useSelectedNoteContext, useThemeContext, useWritingModeContext } from "../NoteContext";
 
 const initShowBar = { value: false, type: null }
 
@@ -7,7 +7,7 @@ export function Footer() {
     const selectedNote = useSelectedNoteContext();
     const writingMode = useWritingModeContext();
     const allNotes = useNotesContext();
-    const [showBar, setShowBar] = useState(initShowBar)
+    const [showBar, setShowBar] = useState(initShowBar);
 
     const note = allNotes.get;
     const noteId = selectedNote.id;
@@ -122,6 +122,7 @@ function ToggleMenu({ type, onBlur }) {
     const selectedNote = useSelectedNoteContext();
     const themeList = useThemeContext();
     const categoryList = useCategoryContext().get;
+    const catFilter = useFilterContext().catFilter;
     const toggle = useRef(null);
 
     const category = type === 'category' ? true : false;
@@ -144,13 +145,46 @@ function ToggleMenu({ type, onBlur }) {
         return () => toggleNode.removeEventListener('blur', onBlur);
     }, [onBlur]);
 
+    function handleCat(ind) {
+        if (selectedNote.id === null) {
+            catFilter.setCategory(ind);
+        } else {
+            selectedNote.modify.category = ind
+        }
+        onBlur();
+    }
+
+    function handleTheme(ind) {
+        selectedNote.modify.theme = ind
+        onBlur();
+    }
+
 
     let toggleItem;
 
     if (!category) {
-        toggleItem = themeList.map((color, ind) => (<div className={ind === note.theme ? "theme selected" : "theme"} key={color} style={{ backgroundColor: color }} onClick={() => selectedNote.modify.theme = ind}>{ind === 0 && 'None'}</div>));
+        toggleItem = themeList.map((color, ind) => (<div className={ind === note.theme ? "theme selected" : "theme"} key={color} style={{ backgroundColor: color }} onClick={() => handleTheme(ind)}>{ind === 0 && 'None'}</div>));
     } else {
-        toggleItem = categoryList.map((cat, ind) => (<div className={ind === note.category ? "toggle-item selected" : "toggle-item"} key={cat} onClick={() => selectedNote.modify.category = ind}>{ind === 0 ? 'Uncategorized' : cat}</div>));
+        toggleItem = categoryList.map((cat, ind) => {
+
+            let condition = () => {
+                if (selectedNote.id !== null) return ind === note.category;
+                else return catFilter.category === ind;
+            }
+
+            let noCat = '';
+
+            if (ind === 0 && selectedNote.id === null) noCat = (
+                <div className={catFilter.category === null ? "toggle-item selected" : "toggle-item"} key='none' onClick={() => handleCat(null)}>All Category</div>
+            )
+
+            return (
+                <>
+                    {noCat}
+                    <div className={condition() ? "toggle-item selected" : "toggle-item"} key={cat} onClick={() => handleCat(ind)}>{cat}</div>
+                </>
+            );
+        });
     }
 
     return (

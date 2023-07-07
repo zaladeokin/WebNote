@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useColorAnimation } from '../hooks/useColorAnimation';
-import { useEmailContext, useSearchContext, useSelectedNoteContext } from '../NoteContext';
+import { useEmailContext, useFilterContext, useSelectedNoteContext } from '../NoteContext';
 
 export function Header() {
     const brandColor = ['#aa421f', '#ffffff'];
@@ -25,7 +25,7 @@ export function Header() {
 
 function Widget({ email }) {
     const selectedNote = useSelectedNoteContext().id;
-    const setSearchKeyword = useSearchContext().setKeyword;
+    const setSearchKeyword = useFilterContext().search.setKeyword;
     const ref = useRef('');
     const profilePic = "http://localhost/MyPortfolio/images/myPhoto.jpg";
 
