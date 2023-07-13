@@ -16,7 +16,6 @@ export function ToggleMenu() {
     const [keyword, setKeyword] = useState('');
 
     const category = showBar.type === 'category' ? true : false;
-    const note = notes.get[selectedNote.id - 1] === undefined ? selectedNote.modify : notes.get[selectedNote.id - 1];
 
     useEffect(() => {
         let toggleNode = toggle.current;
@@ -92,7 +91,7 @@ export function ToggleMenu() {
     let toggleItem;
 
     if (!category) {
-        toggleItem = themeList.map((color, ind) => (<div className={ind === note.theme ? "theme selected" : "theme"} key={color} style={{ backgroundColor: color }} onClick={() => handleTheme(ind)}>{ind === 0 && 'None'}</div>));
+        toggleItem = themeList.map((color, ind) => (<div className={ind === selectedNote.modify.theme ? "theme selected" : "theme"} key={color} style={{ backgroundColor: color }} onClick={() => handleTheme(ind)}>{ind === 0 && 'None'}</div>));
     } else {
         let strictReg = new RegExp('^' + keyword + '$', 'gi');
         let filteredCategoryList = keyword !== '' ? categoryList.filter(filterCondition) : categoryList;//Help to filter categories that consist of keyword
@@ -104,7 +103,7 @@ export function ToggleMenu() {
             let i = categoryList.indexOf(cat);
 
             let condition = () => {
-                if (selectedNote.id !== null) return i === note.category;
+                if (selectedNote.id !== null) return i === selectedNote.modify.category;
                 else return catFilter.category === i;
             }
 

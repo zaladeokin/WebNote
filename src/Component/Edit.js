@@ -7,14 +7,16 @@ export function Edit({ isNew, note, changes }) {
     const category = useCategoryContext().get;
     const [categoryId, setCategoryId] = useState(null);
 
-    let initVal = isNew ? changes.modify.category : note.category;
-
     useEffect(() => {
         let id = null;
 
         if (categoryId === null) {
-            changes.modify.category = initVal;
-            setCategoryId(initVal);
+            changes.modify.theme = isNew ? 0 : note.theme;
+            changes.modify.category = isNew ? 0 : note.category;
+            changes.modify.pinned = isNew ? false : note.pinned;
+            console.log(changes.modify)
+            console.log(note)
+            setCategoryId(isNew ? changes.modify.category : note.category);
         } else {
             id = setInterval(() => {
                 if (categoryId !== changes.modify.category) setCategoryId(changes.modify.category);
@@ -24,7 +26,7 @@ export function Edit({ isNew, note, changes }) {
         return () => {
             if (id !== null) clearInterval(id);
         }
-    }, [categoryId, initVal, changes.modify]);
+    }, [categoryId, isNew, note, changes.modify]);
 
     useEffect(() => {
         let id = setTimeout(() => {

@@ -46,6 +46,9 @@ function View({ note, selectedNote }) {
 
     function handleBack() {
         selectedNote.setId(null);
+        selectedNote.modify.title = '';
+        selectedNote.modify.content = '';
+        selectedNote.modify.pinned = false;
         selectedNote.modify.theme = 0;
         selectedNote.modify.category = 0;
     }
