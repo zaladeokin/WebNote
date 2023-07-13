@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useColorAnimation } from '../hooks/useColorAnimation';
 import { useEmailContext, useFilterContext, useSelectedNoteContext, useShowBarContext } from '../NoteContext';
+import avartar from '../img/webnoteAvatar.png'
 
 export function Header() {
     const brandColor = ['#aa421f', '#ffffff'];
@@ -41,7 +42,6 @@ function Widget({ email }) {
     const selectedNote = useSelectedNoteContext().id;
     const setSearchKeyword = useFilterContext().search.setKeyword;
     const ref = useRef('');
-    const profilePic = "http://localhost/MyPortfolio/images/myPhoto.jpg";
 
     function handleSearch() {
         setSearchKeyword(ref.current.value);
@@ -54,7 +54,7 @@ function Widget({ email }) {
         <>
             <div className='searchIcon'>{icon}</div>
             <div className='searchBar'>{inputBox}</div>
-            <div className='imageWidget'><img src={profilePic} alt={email} /></div >
+            <div className='imageWidget'><img src={avartar} alt={email} /></div >
         </>
     );
 }
