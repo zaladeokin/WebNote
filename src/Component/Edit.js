@@ -61,9 +61,15 @@ export function Edit({ isNew, note, changes }) {
 
     return (
         <div className="edit-wrapper" onClick={(event) => handleFocusNoteTextarea(event)}>
-            <div className='title' role="textbox" ref={title} onClick={(event) => event.stopPropagation()} contentEditable="true">{isNew ? "" : note.title}</div>
-            <div className="content" role="textbox" ref={content} onClick={(event) => event.stopPropagation()} contentEditable="true">{isNew ? "" : note.content}</div>
-            <strong className={(categoryId !== 0) ? '' : 'uncategorized'}>{category[categoryId]}</strong>
+            <div className='title' role="textbox" ref={title} onClick={(event) => event.stopPropagation()} contentEditable="true" suppressContentEditableWarning={true}>
+                {isNew ? "" : note.title}
+            </div>
+            <div className="content" role="textbox" ref={content} onClick={(event) => event.stopPropagation()} contentEditable="true" suppressContentEditableWarning={true}>
+                {isNew ? "" : note.content}
+            </div>
+            <strong className={(categoryId !== 0) ? '' : 'uncategorized'}>
+                {category[categoryId]}
+            </strong>
         </div >
     );
 }
