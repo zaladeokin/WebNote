@@ -16,7 +16,7 @@ export function ToggleMenu() {
     const [keyword, setKeyword] = useState('');
 
     const category = showBar.type === 'category' ? true : false;
-    const note = notes.get[selectedNote.id] === undefined ? selectedNote.modify : notes.get[selectedNote.id];
+    const note = notes.get[selectedNote.id - 1] === undefined ? selectedNote.modify : notes.get[selectedNote.id - 1];
 
     useEffect(() => {
         let toggleNode = toggle.current;
