@@ -107,7 +107,7 @@ function noteReducer(notes, action) {
 function categoryReducer(category, action) {
     switch (action.type) {
         case 'add': {
-            return '';
+            return [...category, action.new];
         } case 'delete': {
             return '';
         } default: {

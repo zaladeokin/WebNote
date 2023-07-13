@@ -469,7 +469,7 @@ footer .addNote {
     bottom: var(--footer-height);
     z-index: 100;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto;
     row-gap: var(--row-gap);
     column-gap: 1vmin;
     justify-content: space-evenly;
@@ -500,13 +500,11 @@ footer .addNote {
 }
 
 .toggle h4 {
-    grid-column: 1 / span 2;
     padding: 0 1vw;
     border-bottom: 2px solid #000000;
 }
 
 .toggle .searchBar {
-    grid-column: 1 / span 2;
     width: 100%;
 }
 
@@ -515,8 +513,7 @@ footer .addNote {
     width: 100%;
 }
 
-.toggle .add,
-.toggle .search {
+.toggle .add {
     margin: 0;
     padding: 1vmin 0;
     border-radius: 1em;
@@ -526,14 +523,12 @@ footer .addNote {
 }
 
 .toggle .add:hover,
-.toggle .search:hover,
 .toggle .toggle-item:hover {
     background-color: #aa421f;
     color: var(--color1);
 }
 
 .toggle .add:active,
-.toggle .search:active,
 .toggle .toggle-item:active {
     background-color: var(--color-variation1);
 }
@@ -555,7 +550,6 @@ footer .addNote {
 .toggle .toggle-item,
 .theme {
     box-sizing: border-box;
-    grid-column: 1 / span 2;
     margin: 0%;
     padding: 1vmin;
     border-bottom: 1px solid var(--bg-color2);
