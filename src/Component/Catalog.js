@@ -1,4 +1,5 @@
-import { useCategoryContext, useNotesContext, useFilterContext, useSelectedNoteContext, useThemeContext } from "../NoteContext";
+import { useEffect } from "react";
+import { useCategoryContext, useNotesContext, useFilterContext, useSelectedNoteContext, useThemeContext, useShowBarContext } from "../NoteContext";
 import { useFocusMain } from "../hooks/useFocusMain";
 
 export function Catalog() {
@@ -9,6 +10,19 @@ export function Catalog() {
     const selectNoteId = useSelectedNoteContext().setId;
     const searchKey = useFilterContext().search.keyword;
     const catFilter = useFilterContext().catFilter.category;
+    const setShowBar = useShowBarContext().setValue;
+
+    useEffect(() => {
+        let node = ref.current;
+
+        function handleShowBarOnFocus() {
+            setShowBar({ value: false, type: null });
+        }
+
+        node.addEventListener('click', handleShowBarOnFocus);
+
+        return () => node.removeEventListener('click', handleShowBarOnFocus);
+    });
 
     function createCards(obj) {
         let cards = obj.map((note) => {

@@ -61,6 +61,7 @@ const CategoryContext = createContext(null);
 const SelectedNoteContext = createContext(null);
 const WritingModeContext = createContext(null);
 const FilterContext = createContext(null);
+const showBarContext = createContext(null);
 
 function emailReducer(email, action) {
     switch (action.type) {
@@ -125,6 +126,7 @@ export function NoteState({ children }) {
     const [writingMode, setWritingMode] = useState(false);
     const [searchKey, setSearchKey] = useState('');
     const [filterByCat, setFilterByCat] = useState(null);
+    const [showBar, setShowBar] = useState({ value: false, type: null });
 
     return (
         <EmailContext.Provider value={{ value: email, dispatch: emailDispatch }}>
@@ -133,7 +135,9 @@ export function NoteState({ children }) {
                     <SelectedNoteContext.Provider value={{ id: id, setId: setId, modify: trackChanges.current }}>
                         <WritingModeContext.Provider value={{ value: writingMode, setMode: setWritingMode }}>
                             <FilterContext.Provider value={{ search: { keyword: searchKey, setKeyword: setSearchKey }, catFilter: { category: filterByCat, setCategory: setFilterByCat } }}>
-                                {children}
+                                <showBarContext.Provider value={{ value: showBar, setValue: setShowBar }}>
+                                    {children}
+                                </showBarContext.Provider>
                             </FilterContext.Provider>
                         </WritingModeContext.Provider>
                     </SelectedNoteContext.Provider>
@@ -169,4 +173,8 @@ export function useWritingModeContext() {
 
 export function useFilterContext() {
     return useContext(FilterContext);
+}
+
+export function useShowBarContext() {
+    return useContext(showBarContext);
 }

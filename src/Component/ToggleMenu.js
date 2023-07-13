@@ -1,15 +1,18 @@
 import { useEffect, useRef } from "react";
-import { useCategoryContext, useFilterContext, useNotesContext, useSelectedNoteContext, useThemeContext } from "../NoteContext";
+import { useCategoryContext, useFilterContext, useNotesContext, useSelectedNoteContext, useShowBarContext, useThemeContext } from "../NoteContext";
 
-export function ToggleMenu({ type, onBlur }) {
+export function ToggleMenu() {
     const notes = useNotesContext();
     const selectedNote = useSelectedNoteContext();
     const themeList = useThemeContext();
     const categoryList = useCategoryContext().get;
     const catFilter = useFilterContext().catFilter;
+    const showBar = useShowBarContext().value;
+    const setShowBar = useShowBarContext().setValue;
     const toggle = useRef(null);
+    const inputNode = useRef(null);
 
-    const category = type === 'category' ? true : false;
+    const category = showBar.type === 'category' ? true : false;
     const note = notes[selectedNote.id] === undefined ? selectedNote.modify : notes[selectedNote.id];
 
     useEffect(() => {
@@ -22,27 +25,19 @@ export function ToggleMenu({ type, onBlur }) {
         return () => clearTimeout(id);
     }, []);
 
-    useEffect(() => {
-        let toggleNode = toggle.current;
-        toggleNode.addEventListener('blur', onBlur);
-
-        return () => toggleNode.removeEventListener('blur', onBlur);
-    }, [onBlur]);
-
     function handleCat(ind) {
         if (selectedNote.id === null) {
             catFilter.setCategory(ind);
         } else {
             selectedNote.modify.category = ind
         }
-        onBlur();
+        setShowBar({ value: false, type: null });
     }
 
     function handleTheme(ind) {
         selectedNote.modify.theme = ind
-        onBlur();
+        setShowBar({ value: false, type: null });
     }
-
 
     let toggleItem;
 
@@ -76,7 +71,7 @@ export function ToggleMenu({ type, onBlur }) {
             <h4>{category ? 'category' : 'theme'}</h4>
             {category && (
                 <>
-                    <div className='searchBar'><input type="search" placeholder=' enter category...' onClick={(event) => event.stopPropagation()} /></div>
+                    <div className='searchBar'><input type="search" placeholder=' enter category...' ref={inputNode} /></div>
                     <div className='search'><i className="fa fa-search">&nbsp;&nbsp;</i>search</div>
                     <div className="add"><i className='fa- fa-plus'>&nbsp;&nbsp;</i>add</div>
                 </>

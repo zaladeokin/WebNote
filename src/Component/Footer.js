@@ -1,24 +1,28 @@
-import { useState } from "react";
-import { useNotesContext, useSelectedNoteContext, useWritingModeContext } from "../NoteContext";
+import { useNotesContext, useSelectedNoteContext, useShowBarContext, useWritingModeContext } from "../NoteContext";
 import { ToggleMenu } from "./ToggleMenu";
-
-const initShowBar = { value: false, type: null }
 
 export function Footer() {
     const selectedNote = useSelectedNoteContext();
     const writingMode = useWritingModeContext();
     const allNotes = useNotesContext();
-    const [showBar, setShowBar] = useState(initShowBar);
+    const showBar = useShowBarContext().value;
+    const setShowBar = useShowBarContext().setValue;
 
     const note = allNotes.get;
     const noteId = selectedNote.id;
 
+    function handleShowBarOnFocus() {
+        setShowBar({ value: false, type: null });
+    }
+
     function handleAddEdit() {
+        handleShowBarOnFocus();
         writingMode.setMode(true);
         if (noteId === null) selectedNote.setId(note.length + 1);
     }
 
     function handleDelete() {
+        handleShowBarOnFocus();
         allNotes.dispatch({
             type: 'delete',
             id: noteId
@@ -27,6 +31,7 @@ export function Footer() {
     }
 
     function handleSave() {
+        handleShowBarOnFocus();
         let newValue, isNew;
 
         if (selectedNote.modify.title.replace(/\s/g, '').length <= 0 && selectedNote.modify.content.replace(/\s/g, '').length <= 0) {
@@ -55,6 +60,7 @@ export function Footer() {
     }
 
     function handleCancel() {
+        handleShowBarOnFocus();
         if (noteId <= note.length) {
             selectedNote.setId(noteId);
             selectedNote.modify.theme = note[noteId - 1].theme;
@@ -68,6 +74,7 @@ export function Footer() {
     }
 
     function handlePin() {
+        handleShowBarOnFocus();
         let isNew = noteId <= note.length ? false : true;
 
         if (!isNew) allNotes.dispatch({
@@ -81,7 +88,7 @@ export function Footer() {
 
     function toggleBar(x) {
         let obj = { ...showBar }
-        obj.value = true;
+        obj.value = !obj.value;
         obj.type = x;
         setShowBar(obj);
     }
@@ -113,7 +120,7 @@ export function Footer() {
             <div className='iconContainer'>
                 {iconMenu(writingMode.value)}
             </div>
-            {showBar.value && < ToggleMenu type={showBar.type} onBlur={() => setShowBar(initShowBar)} />}
+            {showBar.value && <ToggleMenu />}
         </footer>
     );
 }
