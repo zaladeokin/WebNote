@@ -16,7 +16,7 @@ export function ToggleMenu() {
     const [keyword, setKeyword] = useState('');
 
     const category = showBar.type === 'category' ? true : false;
-    const note = notes[selectedNote.id] === undefined ? selectedNote.modify : notes[selectedNote.id];
+    const note = notes.get[selectedNote.id] === undefined ? selectedNote.modify : notes.get[selectedNote.id];
 
     useEffect(() => {
         let toggleNode = toggle.current;
@@ -34,6 +34,7 @@ export function ToggleMenu() {
 
     function handleCat(cat) {
         let ind = categoryList.indexOf(cat);
+        ind = ind !== -1 ? ind : null;
 
         if (selectedNote.id === null) {
             catFilter.setCategory(ind);
@@ -65,6 +66,29 @@ export function ToggleMenu() {
         });
     }
 
+    function handleDeleteCategory(cat) {
+        let ind = categoryList.indexOf(cat);
+        let copyAll = [...notes.get];
+
+        copyAll.forEach((note) => {
+            let copy = { ...note }
+            if (copy.category === ind) copy.category = 0;// set notes with deleting id to default
+            else if (copy.category > ind) copy.category = copy.category - 1;//Re-assign category id to notes with id above category index value to be deleted.
+            notes.dispatch({
+                type: 'add',
+                note: copy,
+                isNew: false
+            });
+        });
+
+        categoryDispatch({
+            type: 'delete',
+            id: ind
+        });
+
+        if (catFilter.category === ind) catFilter.setCategory(null);
+    }
+
     let toggleItem;
 
     if (!category) {
@@ -75,23 +99,35 @@ export function ToggleMenu() {
         let strictFilteredCategoryList = categoryList.filter((cat) => cat.search(strictReg) !== -1);//Help to prompt add button if keyword never exist
         let addBtn = (<div className="add" key={uniqueKey.current} onClick={handleAddCategory}><i className='fa- fa-plus'>&nbsp;&nbsp;</i>add</div>);
 
-        toggleItem = filteredCategoryList.map((cat, ind) => {
+        toggleItem = filteredCategoryList.map((cat) => {
+
+            let i = categoryList.indexOf(cat);
 
             let condition = () => {
-                if (selectedNote.id !== null) return ind === note.category;
-                else return catFilter.category === ind;
+                if (selectedNote.id !== null) return i === note.category;
+                else return catFilter.category === i;
             }
 
-            let noCat = '';
+            let allCat = '';
 
-            if (ind === 0 && selectedNote.id === null && keyword === '') noCat = (
-                <div className={catFilter.category === null ? "toggle-item selected" : "toggle-item"} key='All Category' onClick={() => handleCat(null)}>All Category</div>
+            if (i === 0 && selectedNote.id === null && keyword === '') allCat = (
+                <div className={catFilter.category === null ? "toggle-item selected cat_ex" : "toggle-item cat_ex"} key='All Category' onClick={() => handleCat(null)}>All Category</div>
             )
+
+            let col = (
+                <div className={condition() ? "toggle-item selected" : "toggle-item"} key={cat}>
+                    <div onClick={() => handleCat(cat)}>{cat}</div>
+                    <div onClick={() => handleDeleteCategory(cat)}><i className='fa fa-trash-can'></i></div>
+                </div>
+            );
+            if (i === 0 && keyword === '') col = (
+                <div className={condition() ? "toggle-item selected cat_ex" : "toggle-item cat_ex"} key={cat} onClick={() => handleCat(cat)}>{cat}</div>
+            );
 
             return (
                 <>
-                    {noCat}
-                    <div className={condition() ? "toggle-item selected" : "toggle-item"} key={cat} onClick={() => handleCat(cat)}>{cat}</div>
+                    {allCat}
+                    {col}
                 </>
             );
         });

@@ -1,4 +1,4 @@
-import { useNotesContext, useSelectedNoteContext, useShowBarContext, useWritingModeContext } from "../NoteContext";
+import { useFilterContext, useNotesContext, useSelectedNoteContext, useShowBarContext, useWritingModeContext } from "../NoteContext";
 import { ToggleMenu } from "./ToggleMenu";
 
 export function Footer() {
@@ -7,6 +7,7 @@ export function Footer() {
     const allNotes = useNotesContext();
     const showBar = useShowBarContext().value;
     const setShowBar = useShowBarContext().setValue;
+    const catFilter = useFilterContext().catFilter;
 
     const note = allNotes.get;
     const noteId = selectedNote.id;
@@ -56,6 +57,7 @@ export function Footer() {
             isNew: isNew
         });
 
+        if (catFilter.category !== newValue.category && catFilter.category !== null) catFilter.setCategory(null);
         writingMode.setMode(false);
     }
 

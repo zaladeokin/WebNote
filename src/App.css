@@ -523,8 +523,15 @@ footer .addNote {
 }
 
 .toggle .add:hover,
-.toggle .toggle-item:hover {
+.toggle-item div:first-child:hover,
+.cat_ex:hover {
     background-color: #aa421f;
+    color: var(--color1);
+}
+
+.toggle-item div:last-child:hover {
+    border-radius: 1em;
+    background-color: #dc0505;
     color: var(--color1);
 }
 
@@ -533,7 +540,8 @@ footer .addNote {
     background-color: var(--color-variation1);
 }
 
-.toggle i {
+.toggle i,
+.toggle-item div i {
     margin: 0;
     padding: 0;
     width: fit-content;
@@ -547,11 +555,11 @@ footer .addNote {
     line-height: 50%;
 }
 
-.toggle .toggle-item,
+.toggle-item,
 .theme {
     box-sizing: border-box;
     margin: 0%;
-    padding: 1vmin;
+    padding: 0;
     border-bottom: 1px solid var(--bg-color2);
     color: #000000;
     width: 100%;
@@ -561,7 +569,30 @@ footer .addNote {
     text-align: left;
 }
 
+.toggle-item {
+    display: flex;
+}
+
+.toggle-item div {
+    padding: 1vmin;
+    box-sizing: border-box;
+}
+
+.toggle-item div:first-child {
+    width: 100%;
+}
+
+.toggle-item div:last-child {
+    width: fit-content;
+    font-size: 100%;
+}
+
+.cat_ex {
+    padding: 1vmin;
+}
+
 .theme {
+    padding: 1vmin;
     min-height: 5vh;
     border: 0;
     color: #000000;

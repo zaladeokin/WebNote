@@ -105,11 +105,12 @@ function noteReducer(notes, action) {
 }
 
 function categoryReducer(category, action) {
+    let update = [...category];
     switch (action.type) {
         case 'add': {
             return [...category, action.new];
         } case 'delete': {
-            return '';
+            return update.filter((cat, ind) => ind !== action.id);
         } default: {
             if (process.env.NODE_ENV === 'development') console.log('Invalid note action.type');
             return category;
