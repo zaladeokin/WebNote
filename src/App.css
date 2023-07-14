@@ -245,7 +245,7 @@ input[type='search']:focus {
     border-radius: 1em;
 }
 
-.card h3 {
+.card h4 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -257,6 +257,7 @@ input[type='search']:focus {
 }
 
 .catalog h2,
+.catalog h3,
 .toggle h4 {
     margin: 0;
     padding: 1%;
@@ -264,6 +265,12 @@ input[type='search']:focus {
     font-size: 1.15em;
     font-style: oblique;
     color: var(--color2);
+}
+
+.catalog h3 {
+    font-size: 1em;
+    font-weight: 400;
+    color: #000000;
 }
 
 
@@ -298,12 +305,20 @@ input[type='search']:focus {
     background-color: unset;
 }
 
+.divider {
+    margin: 1vmin 0;
+    padding: 0;
+    border-bottom: 1px solid #000000;
+}
+
 @media all and (min-width:500px) {
     .catalog {
         grid-template-columns: var(--card-width-500px) var(--card-width-500px);
     }
 
-    .catalog h2 {
+    .catalog h2,
+    .catalog h3,
+    .divider {
         grid-column: 1 / span 2;
     }
 }
@@ -313,7 +328,9 @@ input[type='search']:focus {
         grid-template-columns: var(--card-width-750px) var(--card-width-750px) var(--card-width-750px);
     }
 
-    .catalog h2 {
+    .catalog h2,
+    .catalog h3,
+    .divider {
         grid-column: 1 / span 3;
     }
 }
@@ -323,7 +340,9 @@ input[type='search']:focus {
         grid-template-columns: var(--card-width-1000px) var(--card-width-1000px) var(--card-width-1000px) var(--card-width-1000px);
     }
 
-    .catalog h2 {
+    .catalog h2,
+    .catalog h3,
+    .divider {
         grid-column: 1 / span 4;
     }
 }

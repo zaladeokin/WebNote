@@ -28,7 +28,7 @@ export function Catalog() {
         let cards = obj.map((note) => {
             return (
                 <article className='card' key={note.id} onClick={() => selectNoteId(note.id)} style={{ backgroundColor: theme[note.theme] }}>
-                    <h3>{note.title}</h3>
+                    <h4>{note.title}</h4>
                     <p>{note.content}</p>
                     <strong className={(note.category !== 0) ? '' : 'uncategorized'}>{category[note.category]}</strong>
                 </article>
@@ -64,10 +64,12 @@ export function Catalog() {
 
     return (
         <section className='catalog' ref={ref}>
-            {pinnedCard.length > 0 && (<h2>pinned</h2>)}
+            <h2>{catFilter === null ? 'General' : category[catFilter]}</h2>
+            {pinnedCard.length > 0 && (<><div className="divider"></div><h3>pinned</h3></>)}
             {pinnedCard.length > 0 && pinnedCard}
-            {otherCard.length > 0 && (<h2>others</h2>)}
+            {otherCard.length > 0 && (<div className="divider"></div>)}
             {otherCard.length > 0 && otherCard}
+            {(pinnedCard.length <= 0 && otherCard.length <= 0) && (<><div className="divider"></div><h3 style={{ textAlign: 'center' }}>No notes&nbsp;{catFilter !== null && 'in this catgory'}&nbsp;yet.</h3></>)}
         </section>
     );
 }
