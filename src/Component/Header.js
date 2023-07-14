@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { useColorAnimation } from '../hooks/useColorAnimation';
 import { useEmailContext, useFilterContext, useSelectedNoteContext, useShowBarContext } from '../NoteContext';
 import avartar from '../img/webnoteAvatar.png'
@@ -38,7 +38,7 @@ export function Header() {
     );
 }
 
-function Widget({ email }) {
+const Widget = memo(function ({ email }) {
     const selectedNote = useSelectedNoteContext().id;
     const setSearchKeyword = useFilterContext().search.setKeyword;
     const ref = useRef(null);
@@ -59,4 +59,4 @@ function Widget({ email }) {
             <div className='imageWidget'><img src={avartar} alt={email} /></div >
         </>
     );
-}
+});

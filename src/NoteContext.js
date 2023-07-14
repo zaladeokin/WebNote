@@ -61,7 +61,7 @@ const CategoryContext = createContext(null);
 const SelectedNoteContext = createContext(null);
 const WritingModeContext = createContext(null);
 const FilterContext = createContext(null);
-const showBarContext = createContext(null);
+const ShowBarContext = createContext(null);
 
 function emailReducer(email, action) {
     switch (action.type) {
@@ -119,7 +119,7 @@ function categoryReducer(category, action) {
 }
 
 export function NoteState({ children }) {
-    const [email, emailDispatch] = useReducer(emailReducer, '@.');
+    const [email, emailDispatch] = useReducer(emailReducer, '');
     const [allNotes, noteDispatch] = useReducer(noteReducer, initNotes);
     const trackChanges = useRef({ title: '', content: '', category: 0, pinned: false, theme: 0 });
     const [category, categoryDispatch] = useReducer(categoryReducer, initCategory);
@@ -136,9 +136,9 @@ export function NoteState({ children }) {
                     <SelectedNoteContext.Provider value={{ id: id, setId: setId, modify: trackChanges.current }}>
                         <WritingModeContext.Provider value={{ value: writingMode, setMode: setWritingMode }}>
                             <FilterContext.Provider value={{ search: { keyword: searchKey, setKeyword: setSearchKey }, catFilter: { category: filterByCat, setCategory: setFilterByCat } }}>
-                                <showBarContext.Provider value={{ value: showBar, setValue: setShowBar }}>
+                                <ShowBarContext.Provider value={{ value: showBar, setValue: setShowBar }}>
                                     {children}
-                                </showBarContext.Provider>
+                                </ShowBarContext.Provider>
                             </FilterContext.Provider>
                         </WritingModeContext.Provider>
                     </SelectedNoteContext.Provider>
@@ -177,5 +177,5 @@ export function useFilterContext() {
 }
 
 export function useShowBarContext() {
-    return useContext(showBarContext);
+    return useContext(ShowBarContext);
 }
