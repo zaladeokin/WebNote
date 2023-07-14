@@ -14,8 +14,6 @@ export function Edit({ isNew, note, changes }) {
             changes.modify.theme = isNew ? 0 : note.theme;
             changes.modify.category = isNew ? 0 : note.category;
             changes.modify.pinned = isNew ? false : note.pinned;
-            console.log(changes.modify)
-            console.log(note)
             setCategoryId(isNew ? changes.modify.category : note.category);
         } else {
             id = setInterval(() => {

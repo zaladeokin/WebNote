@@ -41,15 +41,17 @@ export function Header() {
 function Widget({ email }) {
     const selectedNote = useSelectedNoteContext().id;
     const setSearchKeyword = useFilterContext().search.setKeyword;
-    const ref = useRef('');
+    const ref = useRef(null);
+    const [initKeyword, setInitKeyword] = useState('');
 
     function handleSearch() {
+        setInitKeyword(ref.current.value)
         setSearchKeyword(ref.current.value);
     }
 
     let selected = selectedNote !== null;
     let icon = selected ? '' : (<i className="fa fa-search"></i>);
-    let inputBox = selected ? '' : (<input type='search' placeholder='search notes...' onClick={(event) => event.stopPropagation()} onChange={handleSearch} ref={ref} />);
+    let inputBox = selected ? '' : (<input type='search' placeholder='search notes...' onClick={(event) => event.stopPropagation()} onChange={handleSearch} value={initKeyword} ref={ref} />);
     return (
         <>
             <div className='searchIcon'>{icon}</div>
