@@ -19,11 +19,19 @@ export function Footer() {
     function handleAddEdit() {
         handleShowBarOnFocus();
         writingMode.setMode(true);
-        if (noteId === null) selectedNote.setId(note.length + 1);
+        if (noteId === null) {
+            let lastNoteId = allNotes.get[allNotes.get.length - 1].id;
+            selectedNote.setId(lastNoteId + 1);
+        }
     }
 
     function handleDelete() {
         handleShowBarOnFocus();
+        selectedNote.modify.title = '';
+        selectedNote.modify.content = '';
+        selectedNote.modify.pinned = false;
+        selectedNote.modify.theme = 0;
+        selectedNote.modify.category = 0;
         allNotes.dispatch({
             type: 'delete',
             id: noteId
