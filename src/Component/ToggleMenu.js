@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useCategoryContext, useFilterContext, useNotesContext, useSelectedNoteContext, useShowBarContext, useThemeContext } from "../NoteContext";
 
 export function ToggleMenu() {
@@ -12,8 +12,8 @@ export function ToggleMenu() {
     const setShowBar = useShowBarContext().setValue;
     const toggle = useRef(null);
     const inputNode = useRef(null);
-    const uniqueKey = useRef(null);
     const [keyword, setKeyword] = useState('');
+    const uniqueId = useId();
 
     const category = showBar.type === 'category' ? true : false;
 
@@ -25,10 +25,6 @@ export function ToggleMenu() {
         }, 500);
 
         return () => clearTimeout(id);
-    }, []);
-
-    useEffect(() => {
-        uniqueKey.current = Math.random().toString(16).slice(2);
     }, []);
 
     function handleCat(cat) {
@@ -96,7 +92,7 @@ export function ToggleMenu() {
         let strictReg = new RegExp('^' + keyword + '$', 'gi');
         let filteredCategoryList = keyword !== '' ? categoryList.filter(filterCondition) : categoryList;//Help to filter categories that consist of keyword
         let strictFilteredCategoryList = categoryList.filter((cat) => cat.search(strictReg) !== -1);//Help to prompt add button if keyword never exist
-        let addBtn = (<div className="add" key={uniqueKey.current} onClick={handleAddCategory}><i className='fa- fa-plus'>&nbsp;&nbsp;</i>add</div>);
+        let addBtn = (<div className="add" key={uniqueId + '-add-button'} onClick={handleAddCategory}><i className='fa- fa-plus'>&nbsp;&nbsp;</i>add</div>);
 
         toggleItem = filteredCategoryList.map((cat) => {
 
@@ -110,7 +106,7 @@ export function ToggleMenu() {
             let allCat = '';
 
             if (i === 0 && selectedNote.id === null && keyword === '') allCat = (
-                <div className={catFilter.category === null ? "toggle-item selected cat_ex" : "toggle-item cat_ex"} key='All Category' onClick={() => handleCat(null)}>All Category</div>
+                <div className={catFilter.category === null ? "toggle-item selected cat_ex" : "toggle-item cat_ex"} key={uniqueId + '-all-category'} onClick={() => handleCat(null)}>All Category</div>
             )
 
             let col = (
