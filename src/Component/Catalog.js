@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useCategoryContext, useNotesContext, useFilterContext, useSelectedNoteContext, useThemeContext, useShowBarContext } from "../NoteContext";
 import { useFocusMain } from "../hooks/useFocusMain";
 
@@ -41,20 +41,29 @@ export function Catalog() {
     let filterednotes;
 
     //Categorized
-    if (catFilter !== null) {
-        filterednotes = notes.filter((note) => note.category === catFilter);
-    } else {
-        filterednotes = notes
-    }
+    filterednotes = useMemo(() => {
+        if (catFilter !== null) {
+            return notes.filter((note) => note.category === catFilter);
+        } else {
+            return notes;
+        }
+    }, [catFilter, notes]);
 
-    //Seach
+    //Search
     if (searchKey !== '') {
         let reg = new RegExp(searchKey, "gi");
         filterednotes = filterednotes.filter((note) => note.title.search(reg) !== -1);
     }
 
-    let pinnedCardId = filterednotes.filter((note) => note.pinned);
-    let otherCardId = filterednotes.filter((note) => !note.pinned);
+    //Sort pinned and unpinned note
+    let pinnedCardId = [];
+    let otherCardId = [];
+
+    for (let i = 0; i < filterednotes.length; i++) {
+        let note = filterednotes[i];
+        if (note.pinned) pinnedCardId.push(note);
+        else otherCardId.push(note);
+    }
 
     let pinnedCard = createCards(pinnedCardId);
     let otherCard = createCards(otherCardId);
