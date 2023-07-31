@@ -107,12 +107,14 @@ export function Footer() {
     }
 
     function iconMenu(Editingmode) {
+        let isPinned = note[noteId - 1] !== undefined ? note[noteId - 1].pinned : false;
+        let pinnedIcon = isPinned === true ? (<i className="fa fa-map-pin fa-flip-vertical"></i>) : (<i className='fa fa-map-pin'></i>);
         if (Editingmode) {
             return (
                 <>
                     <div className='icon' onClick={handleCancel}><i className='fa fa-times'></i></div>
                     <div className='icon' onClick={handleSave}><i className='fas fa-save'></i></div>
-                    <div className='icon' onClick={handlePin}><i className='fa fa-map-pin'></i></div>
+                    <div className='icon' onClick={handlePin}>{pinnedIcon}</div>
                     <div className='icon' onClick={() => toggleBar('category')}><i className='fa fa-layer-group'></i></div>
                     <div className='icon addNote' onClick={() => toggleBar('theme')}><div className='addNoteLabel'><i className='fa-brands fa-affiliatetheme'>&nbsp;&nbsp;</i>Theme</div></div>
                 </>
@@ -120,7 +122,7 @@ export function Footer() {
         } else {
             return (
                 <>
-                    {noteId !== null ? (<div className='icon' onClick={handlePin}><i className='fa fa-map-pin'></i></div>) : (<div className='icon' onClick={() => toggleBar('category')}><i className='fa fa-layer-group'></i></div>)}
+                    {noteId !== null ? (<div className='icon' onClick={handlePin}>{pinnedIcon}</div>) : (<div className='icon' onClick={() => toggleBar('category')}><i className='fa fa-layer-group'></i></div>)}
                     {noteId !== null && (<div className='icon' onClick={handleDelete}><i className='fa fa-trash-can'></i></div>)}
                     <div className='icon addNote' onClick={handleAddEdit}>{noteId !== null ? (<div className='addNoteLabel'><i className='fas fa-edit'>&nbsp;&nbsp;</i>Edit</div>) : (<div className='addNoteLabel'><i className='fa-solid fa-plus'>&nbsp;&nbsp;</i>Add note</div>)}</div>
                 </>
