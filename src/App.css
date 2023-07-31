@@ -589,6 +589,7 @@ footer .addNote {
 }
 
 .toggle-item {
+    display: -webkit-flex;
     display: flex;
 }
 
